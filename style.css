@@ -1,0 +1,75 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: palegreen;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+h1, h2 {
+  text-align: center;
+  color: #8e24aa;
+}
+
+.calculator-img {
+  width: 100px;
+  display: block;
+  margin: 10px auto;
+}
+
+input, select, button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button.number {
+  background-color: #e1f5fe;
+  color: #0277bd;
+  font-weight: bold;
+}
+
+button.operator {
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: bold;
+}
+
+button.control {
+  background-color: #ede7f6;
+  color: #5e35b1;
+  font-weight: bold;
+}
+
+button.bmi-button {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+button.currency-button {
+  background-color: #fff9c4;
+  color: #f57f17;
+}
+
+section {
+  margin-top: 40px;
+}
