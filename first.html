@@ -2,18 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🌈 Stylish Multi Calculator</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: palegreen;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      background-color: #8e24aa;
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    .navbar button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
+      padding: 14px 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .navbar button:hover,
+    .navbar button.active {
+      background-color: #6a1b9a;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #8e24aa;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    input, select, button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button.number {
+      background-color: #e1f5fe;
+      color: #0277bd;
+      font-weight: bold;
+    }
+
+    button.operator {
+      background-color: #ffebee;
+      color: #c62828;
+      font-weight: bold;
+    }
+
+    button.control {
+      background-color: #ede7f6;
+      color: #5e35b1;
+      font-weight: bold;
+    }
+
+    button.bmi-button {
+      background-color: #c8e6c9;
+      color: #2e7d32;
+    }
+
+    button.currency-button {
+      background-color: #fff9c4;
+      color: #f57f17;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <button onclick="showSection(0)" id="tab0" class="active">🧮 Calculator</button>
+    <button onclick="showSection(1)" id="tab1">💪 BMI</button>
+    <button onclick="showSection(2)" id="tab2">💱 Currency</button>
+  </div>
+
   <div class="container">
     <h1>🌈 Stylish Multi Calculator</h1>
 
     <!-- Standard Calculator -->
-    <section>
+    <section id="calc-section" class="section active">
       <h2>🧮 Standard Calculator</h2>
-      <img src="C:\Users\HP\Downloads\charlesdeluvio-GlavtG-umzE-unsplash.jpg" alt="Calculator" class="calculator-img">
       <input type="text" id="calcDisplay" disabled>
       <div class="buttons">
         <button class="number" onclick="appendValue('1')">1</button>
@@ -41,7 +144,7 @@
     </section>
 
     <!-- BMI Calculator -->
-    <section>
+    <section id="bmi-section" class="section">
       <h2>💪 BMI Calculator</h2>
       <label for="height">Height (cm):</label>
       <input type="number" id="height">
@@ -52,7 +155,7 @@
     </section>
 
     <!-- Currency Converter -->
-    <section>
+    <section id="currency-section" class="section">
       <h2>💱 Currency Converter</h2>
       <label for="usdAmount">Amount in USD:</label>
       <input type="number" id="usdAmount">
@@ -67,6 +170,63 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript -->
+  <script>
+    const sections = document.querySelectorAll(".section");
+    const tabs = document.querySelectorAll(".navbar button");
+
+    function showSection(index) {
+      sections.forEach((sec, i) => {
+        sec.classList.toggle("active", i === index);
+        tabs[i].classList.toggle("active", i === index);
+      });
+    }
+
+    function appendValue(val) {
+      document.getElementById("calcDisplay").value += val;
+    }
+
+    function clearDisplay() {
+      document.getElementById("calcDisplay").value = "";
+    }
+
+    function calculate() {
+      try {
+        document.getElementById("calcDisplay").value = eval(document.getElementById("calcDisplay").value);
+      } catch {
+        document.getElementById("calcDisplay").value = "Error";
+      }
+    }
+
+    function calculateBMI() {
+      const height = parseFloat(document.getElementById("height").value) / 100;
+      const weight = parseFloat(document.getElementById("weight").value);
+      const bmi = weight / (height * height);
+      if (!isNaN(bmi)) {
+        document.getElementById("bmiResult").textContent = `Your BMI is ${bmi.toFixed(2)}`;
+      } else {
+        document.getElementById("bmiResult").textContent = "Please enter valid height and weight.";
+      }
+    }
+
+    function convertCurrency() {
+      const usd = parseFloat(document.getElementById("usdAmount").value);
+      const currency = document.getElementById("currency").value;
+      let rate = 0;
+
+      switch (currency) {
+        case "INR": rate = 83.2; break;
+        case "EUR": rate = 0.91; break;
+        case "JPY": rate = 143.6; break;
+      }
+
+      if (!isNaN(usd)) {
+        const result = usd * rate;
+        document.getElementById("currencyResult").textContent = `Converted amount: ${result.toFixed(2)} ${currency}`;
+      } else {
+        document.getElementById("currencyResult").textContent = "Enter a valid amount.";
+      }
+    }
+  </script>
 </body>
 </html>
